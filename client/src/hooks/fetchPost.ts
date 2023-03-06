@@ -1,19 +1,30 @@
-import { useState } from 'react';
-export const useFetch = async (url: string, config: RequestInit) => {
-  const [data, setData] = useState([]);
+interface Args {
+  url: string;
+  prompt?: string;
+  photo?: string;
+}
 
-  const [loading, setLoading] = useState<boolean>(false);
+const useFetch = async ({ url, prompt, photo }: Args) => {
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      prompt,
+      photo
+    })
+  };
   try {
-    setLoading(true);
     const response = await fetch(url, config);
     if (response.ok) {
       const result = await response.json();
-      setData(result.data);
+
+      return result;
     }
-    setLoading(false);
   } catch (error) {
     console.log(error);
   }
-
-  return { data, loading };
 };
+
+export default useFetch;

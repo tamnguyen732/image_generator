@@ -3,8 +3,11 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import postRoutes from "./routes/postRoute";
 import dalleRoutes from "./routes/dalleRoutes";
-const port = 3000;
+import connectToDb from "./connectDb";
+const port = 4000;
 dotenv.config();
+
+connectToDb();
 
 const app = express();
 app.use(cors());

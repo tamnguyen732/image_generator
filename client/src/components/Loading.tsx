@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Loader = () => (
+const Loading = () => (
   <div role='status'>
     <svg
       aria-hidden='true'
@@ -21,4 +19,4 @@ const Loader = () => (
   </div>
 );
 
-export default Loader;
+export default Loading;
