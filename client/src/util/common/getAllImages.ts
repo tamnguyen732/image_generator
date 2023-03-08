@@ -16,9 +16,9 @@ function getAllImages() {
         const response = await fetch(images_url, config);
 
         if (response.ok) {
-          const result = await response.json();
+          const { data } = await response.json();
 
-          setImages(result);
+          setImages(data);
         }
       } catch (error) {
         console.log(error);

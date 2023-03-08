@@ -33,7 +33,7 @@ function ModalShare({ setModal, url }: Props) {
                     className='text-2xl text-center leading-6 font-bold text-gray-900 '
                     id='modal-headline'
                   >
-                    Share to Social
+                    Share On Socials
                   </h3>
                   <div className='flex flex-col justify-center items-start gap-4 ml-14'>
                     <div className='flex gap-2 text-lg mt-5'>

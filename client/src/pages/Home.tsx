@@ -9,24 +9,36 @@ import SharedCommunity from '~/components/SharedCommunity';
 import ModalShare from '~/components/ModalShare';
 import { ShownImages } from '~/components/ShownImages';
 const Home = () => {
-  const [prompt, setPrompt] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [image, setImage] = useState<string>('');
-  const [modal, setModal] = useState<boolean>(false);
   const generate_post_url = import.meta.env.VITE_CREATE_POST_URL;
   const get_post_url = import.meta.env.VITE_POST_URL;
+  const [prompt, setPrompt] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tempImage, setTempImage] = useState<string>('');
+  const [photo, setPhoto] = useState<string>('');
+  const [modal, setModal] = useState<boolean>(false);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrompt(e.target.value);
   };
-  const { handleDownload } = downloadImage({ imageUrl: image });
+  const { handleDownload } = downloadImage({ imageUrl: photo });
   const { images } = getAllImages();
+
   const generateImage = async () => {
-    setLoading(true);
-    const { photo } = await useFetch({ url: generate_post_url, prompt });
-    setLoading(false);
-    if (photo) {
-      setImage(photo);
-      await useFetch({ url: get_post_url, prompt, photo: prompt });
+    try {
+      setLoading(true);
+      const result = await useFetch({ url: generate_post_url, prompt });
+
+      setTempImage(`data:image/jpeg;base64,${result.photo}`);
+      setLoading(false);
+      if (result) {
+        const { data } = await useFetch({
+          url: get_post_url,
+          prompt,
+          photo: tempImage
+        });
+        setPhoto(data.photo);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -47,8 +59,12 @@ const Home = () => {
                 <Loading />
               ) : (
                 <>
-                  {image ? (
-                    <img src={image} alt='preview' className='w-full h-full object-cover' />
+                  {tempImage && !loading ? (
+                    <img
+                      src={tempImage || photo}
+                      alt='preview'
+                      className='w-full h-full object-cover'
+                    />
                   ) : (
                     <img
                       src={preview}
@@ -69,7 +85,7 @@ const Home = () => {
             >
               {loading ? 'Generating...' : 'Generate'}
             </button>
-            {image && !loading ? (
+            {tempImage && !loading ? (
               <button
                 type='button'
                 onClick={handleDownload}
@@ -82,10 +98,10 @@ const Home = () => {
         </form>
         <SharedCommunity setModal={setModal} />
 
-        {modal && <ModalShare url={image} setModal={setModal} />}
+        {modal && <ModalShare url={tempImage} setModal={setModal} />}
       </section>
 
-      <ShownImages />
+      <ShownImages images={images} setPrompt={setPrompt} />
     </>
   );
 };
