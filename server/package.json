@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
-  "type":"module",
+
   "scripts": {
-    "start": "node server.ts",
+    "start": "node dist/server.js",
     "dev": "nodemon server.ts"
     
   },
