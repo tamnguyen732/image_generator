@@ -1,5 +1,3 @@
-import { saveAs } from 'file-saver';
-
 interface Args {
   imageUrl: string;
 }
