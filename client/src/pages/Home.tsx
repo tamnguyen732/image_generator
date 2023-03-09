@@ -21,22 +21,20 @@ const Home = () => {
   };
   const { handleDownload } = downloadImage({ imageUrl: photo });
   const { images } = getAllImages();
+  console.log(photo);
 
   const generateImage = async () => {
     try {
       setLoading(true);
-      const result = await useFetch({ url: generate_post_url, prompt });
+      const { photo } = await useFetch({ url: generate_post_url, prompt });
 
-      setTempImage(`data:image/jpeg;base64,${result.photo}`);
-      setLoading(false);
-      if (result) {
-        const { data } = await useFetch({
-          url: get_post_url,
-          prompt,
-          photo: tempImage
-        });
-        setPhoto(data.photo);
-      }
+      setPhoto(photo);
+
+      await useFetch({
+        url: get_post_url,
+        prompt,
+        photo: photo
+      });
     } catch (error) {
       console.log(error);
     }
@@ -59,12 +57,8 @@ const Home = () => {
                 <Loading />
               ) : (
                 <>
-                  {tempImage && !loading ? (
-                    <img
-                      src={tempImage || photo}
-                      alt='preview'
-                      className='w-full h-full object-cover'
-                    />
+                  {photo && !loading ? (
+                    <img src={photo} alt='preview' className='w-full h-full object-cover' />
                   ) : (
                     <img
                       src={preview}
@@ -85,7 +79,7 @@ const Home = () => {
             >
               {loading ? 'Generating...' : 'Generate'}
             </button>
-            {tempImage && !loading ? (
+            {photo && !loading ? (
               <button
                 type='button'
                 onClick={handleDownload}
@@ -98,7 +92,7 @@ const Home = () => {
         </form>
         <SharedCommunity setModal={setModal} />
 
-        {modal && <ModalShare url={tempImage} setModal={setModal} />}
+        {modal && <ModalShare url={photo} setModal={setModal} />}
       </section>
       <h3 className=' font-extrabold text-[#222328] text-[32px] py-5'> Ideas for you </h3>
       <ShownImages images={images} setPrompt={setPrompt} />

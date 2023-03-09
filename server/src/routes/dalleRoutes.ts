@@ -1,10 +1,15 @@
 import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
-
+import { v2 as cloudinary } from "cloudinary";
 dotenv.config();
 
 const router = express.Router();
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -28,7 +33,10 @@ router.route("/").post(async (req, res) => {
     });
 
     const image = response.data.data[0].b64_json;
-    res.status(200).json({ photo: image });
+    const photoUrl = await cloudinary.uploader.upload(
+      `data:image/jpeg;base64,${image}`
+    );
+    res.status(200).json({ photo: photoUrl.url });
   } catch (error) {
     console.error(error);
     res
