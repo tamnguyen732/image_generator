@@ -5,6 +5,7 @@
   "main": "server.ts",
 
   "scripts": {
+    "build": "npm install && npm run build",
     "start": "node dist/server.js",
     "dev": "nodemon server.ts"
     
