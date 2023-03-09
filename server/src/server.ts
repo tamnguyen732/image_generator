@@ -4,7 +4,7 @@ import cors from "cors";
 import postRoutes from "./routes/postRoute";
 import dalleRoutes from "./routes/dalleRoutes";
 import connectToDb from "./connectDb";
-const port = 4000;
+const port = 5000;
 dotenv.config();
 
 connectToDb();

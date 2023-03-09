@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts --exec ts-node-dev --watch 'src/**/*.ts'"
+    "dev": "nodemon src/server.ts "
   },
   "keywords": [],
   "author": "",
