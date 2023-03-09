@@ -16,8 +16,8 @@ interface Props {
 export const ShownImages = ({ images, setPrompt }: Props) => {
   return (
     <div className='grid lg:grid-cols-4 gap-2 mt-5'>
-      {images.map(({ photo, prompt }) => {
-        return <Card photo={photo} prompt={prompt} setPrompt={setPrompt} />;
+      {images.map(({ photo, prompt, _id }) => {
+        return <Card key={_id} photo={photo} prompt={prompt} setPrompt={setPrompt} />;
       })}
     </div>
   );

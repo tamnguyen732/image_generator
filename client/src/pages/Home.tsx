@@ -13,7 +13,6 @@ const Home = () => {
   const get_post_url = import.meta.env.VITE_POST_URL;
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [tempImage, setTempImage] = useState<string>('');
   const [photo, setPhoto] = useState<string>('');
   const [modal, setModal] = useState<boolean>(false);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,15 +20,13 @@ const Home = () => {
   };
   const { handleDownload } = downloadImage({ imageUrl: photo });
   const { images } = getAllImages();
-  console.log(photo);
 
   const generateImage = async () => {
     try {
       setLoading(true);
       const { photo } = await useFetch({ url: generate_post_url, prompt });
-
+      setLoading(false);
       setPhoto(photo);
-
       await useFetch({
         url: get_post_url,
         prompt,
