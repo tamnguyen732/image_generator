@@ -1,13 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.ts",
   "scripts": {
-    "build": "npm install && npm run build2",
-    "build2": "tsc",
-    "start": "node dist/server.js",
-    "dev": "node dist/server.js"
+    "build": "tsc",
+		"start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
