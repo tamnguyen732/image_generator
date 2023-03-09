@@ -100,7 +100,7 @@ const Home = () => {
 
         {modal && <ModalShare url={tempImage} setModal={setModal} />}
       </section>
-
+      <h3 className=' font-extrabold text-[#222328] text-[32px] py-5'> Ideas for you </h3>
       <ShownImages images={images} setPrompt={setPrompt} />
     </>
   );
