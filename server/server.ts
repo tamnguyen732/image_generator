@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
-import postRoutes from "./routes/postRoute";
-import dalleRoutes from "./routes/dalleRoutes";
-import connectToDb from "./connectDb";
+import postRoutes from "./src/routes/postRoute";
+import dalleRoutes from "./src/routes/dalleRoutes";
+import connectToDb from "./src/connectDb";
 const port = 5000;
 dotenv.config();
 
