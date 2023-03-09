@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm install && npm run build",
     "start": "server.ts",
-    "dev": "ts-node server.ts"
+    "dev": "node dist/server.js"
     
   },
   "keywords": [],
